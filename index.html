@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PixelForge — Free AI Image Studio</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo-dot"></span>
+      <span>PixelForge Studio</span>
+    </div>
+    <span class="badge">FLUX.1 Powered · Secure Proxy</span>
+  </header>
+
+  <main class="workspace">
+    <!-- Left Panel: Guided Controls -->
+    <section class="panel controls-panel" aria-label="Image generation controls">
+      <h1>Create an image</h1>
+      <p class="subtitle">Describe what you want to see, pick a style, and generate.</p>
+
+      <form id="gen-form" novalidate>
+        <div class="field-header">
+          <label for="prompt">1. Describe your image</label>
+          <button type="button" id="surprise-btn" class="text-btn">Surprise me</button>
+        </div>
+
+        <textarea
+          id="prompt"
+          rows="4"
+          maxlength="500"
+          placeholder="Example: A cozy glass greenhouse filled with glowing lanterns in a snowy pine forest at dusk"
+          required
+        ></textarea>
+        <div class="helper-row">
+          <span class="hint">Tip: Include subject, setting, and lighting for best accuracy.</span>
+          <span id="char-count" class="char-count">0 / 500</span>
+        </div>
+
+        <div class="field-group">
+          <span class="label-text">2. Choose a visual style</span>
+          <div class="style-grid" id="style-grid" role="radiogroup" aria-label="Visual style">
+            <button type="button" class="style-card active" data-style="photorealistic">Photo</button>
+            <button type="button" class="style-card" data-style="cinematic">Cinematic</button>
+            <button type="button" class="style-card" data-style="anime">Anime</button>
+            <button type="button" class="style-card" data-style="3d-render">3D Render</button>
+            <button type="button" class="style-card" data-style="minimal">Minimal</button>
+            <button type="button" class="style-card" data-style="watercolor">Watercolor</button>
+            <button type="button" class="style-card" data-style="none">Raw Prompt</button>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <div class="field-header">
+            <label for="steps">3. Detail Level</label>
+            <span id="steps-label" class="steps-value">Balanced (4 steps)</span>
+          </div>
+          <input id="steps" type="range" min="2" max="8" value="4" />
+          <div class="range-labels">
+            <span>Faster</span>
+            <span>Sharper</span>
+          </div>
+        </div>
+
+        <button type="submit" id="generate-btn" class="primary-btn">
+          Generate Image
+        </button>
+
+        <p id="error-box" class="error-box" role="alert" hidden></p>
+      </form>
+    </section>
+
+    <!-- Right Panel: Live Canvas & Recent Creations -->
+    <section class="panel preview-panel" aria-label="Generated image preview">
+      <div class="canvas-frame" id="canvas-frame">
+        <div id="empty-state" class="empty-state">
+          <div class="empty-icon" aria-hidden="true">✦</div>
+          <h2>Your canvas is ready</h2>
+          <p>Enter a description on the left and click <strong>Generate Image</strong>.</p>
+        </div>
+
+        <div id="loading-state" class="loading-state" hidden>
+          <div class="shimmer"></div>
+          <p id="loading-text">Crafting your image with FLUX.1...</p>
+        </div>
+
+        <img id="result-img" class="result-img" alt="Generated AI artwork" hidden />
+      </div>
+
+      <div id="action-bar" class="action-bar" hidden>
+        <p id="active-prompt" class="active-prompt"></p>
+        <div class="action-buttons">
+          <button type="button" id="download-btn" class="secondary-btn">Download Image</button>
+        </div>
+      </div>
+
+      <div id="history-section" class="history-section" hidden>
+        <div class="field-header">
+          <span class="label-text">Recent Creations (saved in this session)</span>
+          <button type="button" id="clear-history-btn" class="text-btn">Clear</button>
+        </div>
+        <div id="history-grid" class="history-grid"></div>
+      </div>
+    </section>
+  </main>
+
+  <script src="/app.js" defer></script>
+</body>
+</html>
